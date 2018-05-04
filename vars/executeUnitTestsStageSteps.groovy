@@ -3,7 +3,7 @@
 def call() {
     echo("Executing [Unit Tests] stage steps...")
 
-    sh("mvn -e -DskipSourceCompile=true -DskipTestCompile=true install")
+    sh("mvn -e -DskipSourceCompile=true -DskipTestCompile=true test")
 
     echo("Completed [Unit Tests] stage steps.")
 }
