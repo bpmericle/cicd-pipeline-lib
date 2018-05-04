@@ -7,7 +7,7 @@ def call() {
 
     branches['test'] = {sh("mvn -e -Dmaven.main.skip=true -Dmaven.test.skip=true test")}
 
-    branches['static-analysis'] = {sh("mvn -e sonar:sonar")}
+    branches['static-analysis'] = {sh("mvn -e -Dsonar.host.url=http://${SONARQUBE_SERVICE_HOST}:${SONARQUBE_SERVICE_PORT} -Dsonar.login=${SONARQUBE_SERVICE_LOGIN_TOKEN} sonar:sonar")}
 
     parallel branches
 
