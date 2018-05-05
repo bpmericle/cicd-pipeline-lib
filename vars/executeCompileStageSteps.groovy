@@ -3,7 +3,7 @@
 def call() {
     echo("Executing [Compile] stage steps...")
 
-    sh("sudo -S docker version")
+    sh("echo \'\' | sudo -S docker version")
 
     withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'NEXUS_SERVICE_LOGIN_USERNAME', passwordVariable: 'NEXUS_SERVICE_LOGIN_PASSWORD')]) {
         // create dynamic settings.xml failsafe
