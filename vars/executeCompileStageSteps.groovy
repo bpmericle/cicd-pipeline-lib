@@ -3,6 +3,8 @@
 def call() {
     echo("Executing [Compile] stage steps...")
 
+    sh("docker version")
+
     withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'NEXUS_SERVICE_LOGIN_USERNAME', passwordVariable: 'NEXUS_SERVICE_LOGIN_PASSWORD')]) {
         // create dynamic settings.xml failsafe
         def settingsText = """
