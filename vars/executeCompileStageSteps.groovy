@@ -3,7 +3,7 @@
 def call() {
     echo("Executing [Compile] stage steps...")
 
-    withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+    withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'NEXUS_SERVICE_LOGIN_USERNAME', passwordVariable: 'NEXUS_SERVICE_LOGIN_PASSWORD')]) {
         // create dynamic settings.xml failsafe
         def settingsText = """
   <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
