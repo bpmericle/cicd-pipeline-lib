@@ -8,10 +8,14 @@ def call() {
     def version = pomInfo.version
     def jarFile = "${artifactId}-${version}.jar"
     def dockerImageTag = "${artifactId}:${version}"
-    def dockerRegistry = "http://${NEXUS_SERVICE_HOST}:${NEXUS_SERVICE_PORT_NEXUS_DOCKER_REPO_PORT}/repository/crosslake-docker/"
-    def dockerRegistryTag = "${dockerRegistry}/${dockerImageTag}"
+    def dockerHostAndPort = "${NEXUS_SERVICE_HOST}:${NEXUS_SERVICE_PORT_NEXUS_DOCKER_REPO_PORT}"
+    def dockerRegistryTag = "${dockerHostAndPort}/${dockerImageTag}"
 
     sh("sudo docker build -t latest -t ${dockerImageTag} -t ${dockerRegistryTag} --build-arg JAR_FILE=${jarFile} .")
+
+    withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'NEXUS_SERVICE_LOGIN_USERNAME', passwordVariable: 'NEXUS_SERVICE_LOGIN_PASSWORD')]) {
+        sh("sudo docker login -u ${NEXUS_SERVICE_LOGIN_USERNAME} -p ${NEXUS_SERVICE_LOGIN_PASSWORD} ${dockerHostAndPort}")
+    }
 
     sh("sudo docker push ${dockerRegistryTag}")
 
