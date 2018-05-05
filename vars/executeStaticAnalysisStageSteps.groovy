@@ -10,5 +10,14 @@ def call() {
         '''
     }
 
+    timeout(time: 45, unit: 'SECONDS') { 
+        def qg = waitForQualityGate()
+        if (qg.status != 'OK') {
+            error "Pipeline aborted due to static analysis quality gate failure: ${qg.status}"
+        } else {
+            echo("Static analysis quality gate passed.")
+        }
+    }
+
     echo("Completed [Static Analysis] stage steps.")
 }
