@@ -23,11 +23,6 @@ def call() {
         <id>nexus</id>
         <username>${NEXUS_SERVICE_LOGIN_USERNAME}</username>
         <password>${NEXUS_SERVICE_LOGIN_PASSWORD}</password>
-        <configuration>
-          <repository>${NEXUS_SERVICE_HOST}:${NEXUS_SERVICE_PORT}/repository/crosslake-docker/</repository>
-          <tag>latest</tag>
-          <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
-        </configuration>
       </server>
     </servers>
   </settings>
