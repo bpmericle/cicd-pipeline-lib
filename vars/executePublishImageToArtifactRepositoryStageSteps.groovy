@@ -3,7 +3,7 @@
 def call() {
     echo("Executing [Publish Image] stage steps...")
 
-    def pomInfo - readMavenPom()
+    def pomInfo = readMavenPom()
 
     withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'NEXUS_SERVICE_LOGIN_USERNAME', passwordVariable: 'NEXUS_SERVICE_LOGIN_PASSWORD')]) {
         docker.withRegistry("http://${NEXUS_SERVICE_HOST}:${NEXUS_SERVICE_PORT}/repository/crosslake-docker/") {
