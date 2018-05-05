@@ -9,7 +9,7 @@ def call() {
     def jarFile = "${artifactId}-${version}.jar"
     def dockerImageTag = "${artifactId}:${version}"
     def dockerImageTagLatest = "${artifactId}:latest"
-    def dockerHostAndPort = "${NEXUS_SERVICE_HOST}:${NEXUS_SERVICE_NEXUS_HTTPS_DOCKER_PORT}"
+    def dockerHostAndPort = "${NEXUS_SERVICE_HOST}:${NEXUS_SERVICE_PORT_NEXUS_HTTPS_DOCKER_PORT}"
     def dockerRegistryTag = "${dockerHostAndPort}/${dockerImageTag}"
 
     sh("sudo docker build -t ${dockerImageTagLatest} -t ${dockerImageTag} -t ${dockerRegistryTag} --build-arg JAR_FILE=${jarFile} .")
