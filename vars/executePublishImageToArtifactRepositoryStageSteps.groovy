@@ -9,8 +9,8 @@ def call() {
     def jarFile = "${artifactId}-${version}.jar"
     def dockerImageTag = "${artifactId}:${version}"
     def dockerImageTagLatest = "${artifactId}:latest"
-    def dockerHostAndPort = "${NEXUS_SERVICE_HOST}:${NEXUS_SERVICE_PORT_NEXUS_DOCKER_HTTPS_PORT}"
-    def dockerRegistryTag = "${dockerHostAndPort}/${dockerImageTag}"
+    def dockerHostAndPort = "${NEXUS_SERVICE_HOST}:${NEXUS_SERVICE_PORT}"
+    def dockerRegistryTag = "${dockerHostAndPort}repository/crosslake-docker/${dockerImageTag}"
 
     sh("sudo docker build -t ${dockerImageTagLatest} -t ${dockerImageTag} -t ${dockerRegistryTag} --build-arg JAR_FILE=${jarFile} .")
 /*
