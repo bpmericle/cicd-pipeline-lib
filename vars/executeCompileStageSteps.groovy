@@ -32,7 +32,6 @@ def call() {
     }
 
     writeFile(file: 'dynamic-settings.xml', text: settingsText)
-    stash(name: 'dynamic-settings', includes: 'dynamic-settings.xml')
 
     sh("mvn -Djacoco.skip=true -e -s dynamic-settings.xml clean test-compile")
 
