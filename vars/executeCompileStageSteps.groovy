@@ -3,7 +3,7 @@
 def call() {
     echo("Executing [Compile] stage steps...")
 
-    withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'NEXUS_SERVICE_LOGIN_USERNAME', passwordVariable: 'NEXUS_SERVICE_LOGIN_PASSWORD')]) {
+    withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'LOGIN_USERNAME', passwordVariable: 'LOGIN_PASSWORD')]) {
         // create dynamic settings.xml failsafe
         def settingsText = """
   <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
@@ -13,7 +13,7 @@ def call() {
       <mirror>
         <id>crosslake-repo-mirror</id>
         <name>Crosslake Maven Repository Manager</name>
-        <url>http://${NEXUS_SERVICE_HOST}:${NEXUS_SERVICE_PORT}/repository/crosslake-public/</url>
+        <url>http://${INTERNAL_PROXY_SERVICE_HOST}:${NEXUS_SERVICE_PORT}/repository/crosslake-public/</url>
         <mirrorOf>*</mirrorOf>
       </mirror>
     </mirrors>
@@ -21,8 +21,8 @@ def call() {
     <servers>
       <server>
         <id>nexus</id>
-        <username>${NEXUS_SERVICE_LOGIN_USERNAME}</username>
-        <password>${NEXUS_SERVICE_LOGIN_PASSWORD}</password>
+        <username>${LOGIN_USERNAME}</username>
+        <password>${LOGIN_PASSWORD}</password>
       </server>
     </servers>
   </settings>
