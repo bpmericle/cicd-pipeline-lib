@@ -3,8 +3,8 @@
 def call() {
     echo("Executing [Static Analysis] stage steps...")
 
-    node {
-        unstash(name: 'dynamic-settings')
+    node('master') {
+        //unstash(name: 'dynamic-settings')
 
         withSonarQubeEnv('sonarqube') {
             sh("mvn -s dynamic-settings.xml -e sonar:sonar")
