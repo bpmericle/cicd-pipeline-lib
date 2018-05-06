@@ -13,7 +13,7 @@ def call() {
       <mirror>
         <id>crosslake-repo-mirror</id>
         <name>Crosslake Maven Repository Manager</name>
-        <url>http://${NEXUS_HOSTNAME}:${NEXUS_SERVICE_PORT}/repository/crosslake-public/</url>
+        <url>http://${INTERNAL_PROXY_SERVICE_HOST}:${NEXUS_SERVICE_PORT}/repository/crosslake-public/</url>
         <mirrorOf>*</mirrorOf>
       </mirror>
     </mirrors>
