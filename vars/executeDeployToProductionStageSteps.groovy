@@ -3,7 +3,19 @@
 def call() {
     echo("Executing [Deploy to Production] stage steps...")
 
-    //TODO
+    def pomInfo = readMavenPom()
+    def artifactId = pomInfo.artifactId
+    def version = pomInfo.version
+    def dockerImageTag = "${artifactId}:${version}"
+    def dockerHostAndDockerPort = "${NEXUS_HOSTNAME}:${NEXUS_SERVICE_PORT_DOCKER}"
+    def imageTag = "${dockerHostAndDockerPort}/${dockerImageTag}"
+    def namespace = 'production'
+    def templateFileName = 'Kubernetesfile'
+    def replacementValues = [:]
+    replacementValues['artifactId'] = artifactId
+    replacementValues['imageTag'] = imageTag
+
+    kubernetes.apply(namespace, templateFileName, replacementValues)
 
     echo("Completed [Deploy to Production] stage steps.")
 }
