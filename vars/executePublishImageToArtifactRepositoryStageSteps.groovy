@@ -13,15 +13,13 @@ def call() {
     def dockerHostAndDockerPort = "${NEXUS_SERVICE_HOST}:${NEXUS_SERVICE_PORT_NEXUS_HTTPS_DOCKER_PORT}"
     def dockerRegistryTag = "${dockerHostAndDockerPort}/${dockerImageTag}"
 
-    sh("sudo docker build -t ${dockerImageTagLatest} -t ${dockerImageTag} -t ${dockerRegistryTag} --build-arg JAR_FILE=${jarFile} .")
+    sh("sudo docker build -t ${dockerImageTagLatest} -t ${dockerImageTag} --build-arg JAR_FILE=${jarFile} .")
 
-    sh("env")
-
-    withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'NEXUS_SERVICE_LOGIN_USERNAME', passwordVariable: 'NEXUS_SERVICE_LOGIN_PASSWORD')]) {
-        sh("echo ${NEXUS_SERVICE_LOGIN_PASSWORD} | sudo docker login --username ${NEXUS_SERVICE_LOGIN_USERNAME} --password-stdin ${dockerHostAndDockerPort}")
+    withCredentials([usernamePassword(credentialsId: 'docker.io', usernameVariable: 'LOGIN_USERNAME', passwordVariable: 'LOGIN_PASSWORD')]) {
+        sh("echo ${LOGIN_PASSWORD} | sudo docker login --username ${LOGIN_USERNAME} --password-stdin")
     }
 
-    sh("sudo docker push ${dockerRegistryTag}")
+    sh("sudo docker push ${dockerImageTag}")
 
     echo("Completed [Publish Image] stage steps.")
 }
