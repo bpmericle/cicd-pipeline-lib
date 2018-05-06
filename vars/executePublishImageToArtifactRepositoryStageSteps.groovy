@@ -9,7 +9,7 @@ def call() {
     def jarFile = "${artifactId}-${version}.jar"
     def dockerImageTag = "${artifactId}:${version}"
     def dockerImageTagLatest = "${artifactId}:latest"
-    def dockerHostAndDockerPort = "${NEXUS_HOSTNAME_FOR_DOCKER}:${NEXUS_SERVICE_PORT_DOCKER}"
+    def dockerHostAndDockerPort = "${NEXUS_HOSTNAME}:${NEXUS_SERVICE_PORT_DOCKER}"
     def dockerRegistryTag = "${dockerHostAndDockerPort}/${dockerImageTag}"
     def dockerRegistryTagLatest = "${dockerHostAndDockerPort}/${dockerImageTagLatest}"
 
