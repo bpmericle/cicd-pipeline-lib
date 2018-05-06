@@ -10,9 +10,10 @@ multibranchPipelineJob('pipelines/cicd-app-pipeline') {
     description('Declarative Pipeline for the cicd app demo.')
 
     branchSources {
-        git {
-            remote('https://github.com/bpmericle/cicd-demo-app.git')
-            includes('*')
+        github {
+            scanCredentialsId('crosslake-github')
+            repoOwner('bpmericle')
+            repository('cicd-demo-app')
         }
     }
 
