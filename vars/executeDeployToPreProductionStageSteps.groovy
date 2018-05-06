@@ -32,7 +32,7 @@ spec:
       - name: ${artifactId}
         image: ${dockerRegistryTag}
         ports:
-        - containerPort: 8080
+        - containerPort: 8090
 ---
 kind: Service
 apiVersion: v1
@@ -44,7 +44,7 @@ spec:
   ports:
   - name: http
     port: 8611
-    targetPort: 8080
+    targetPort: 8090
   selector:
     app: ${artifactId}
 """
