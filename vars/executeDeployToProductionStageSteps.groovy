@@ -10,7 +10,7 @@ def call() {
     def dockerHostAndDockerPort = "${NEXUS_HOSTNAME}:${NEXUS_SERVICE_PORT_DOCKER}"
     def imageTag = "${dockerHostAndDockerPort}/${dockerImageTag}"
     def namespace = 'production'
-    def templateFileName = 'Kubernetesfile'
+    def templateFileName = 'kubernetesfile.yml'
     def replacementValues = [:]
     replacementValues['artifactId'] = artifactId
     replacementValues['imageTag'] = imageTag
