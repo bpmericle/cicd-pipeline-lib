@@ -18,4 +18,18 @@ def apply(namespace, externalPort, templateFileName='kubernetes-app-config-templ
     writeFile(file: appConfigFileName, text: appConfigFileContent)
 
     sh("kubectl apply -f ${appConfigFileName}")
+
+    //test running service
+    sleep(5)
+    def clusterIPCommand = "kubectl get services --namespace=${namespace} -o jsonpath='{.spec.clusterIP}' ${artifactId}"
+    def clusterIP = sh(script: clusterIPCommand, returnStdout: true).trim()
+    def portCommand = "kubectl get services --namespace=${namespace} -o jsonpath=\'{.spec.ports[?(@.name==\"http\")].port}\' ${artifactId}"
+    def port = sh(script: portCommand, returnStdout: true).trim()
+
+    def healthCheckEndPoint = "http://${clusterIP}:${port}/actuator/health"
+    def healthCheckCommand = "curl -s -o /dev/null -w \"%{http_code}\" ${healthCheckEndPoint}"
+    def statusCode = sh(script: healthCheckCommand, returnStdout: true).trim()
+    if (statusCode != '200') {
+        error("Health check failed for endpoint [${healthCheckEndPoint}].")
+    }
 }
