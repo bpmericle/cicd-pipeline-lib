@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-def apply(namespace, templateFileName='kubernetes-app-config-template.yml') {
+def apply(namespace, externalPort, templateFileName='kubernetes-app-config-template.yml') {
     def pomInfo = readMavenPom()
     def artifactId = pomInfo.artifactId
     def version = pomInfo.version
@@ -11,7 +11,10 @@ def apply(namespace, templateFileName='kubernetes-app-config-template.yml') {
 
     def appConfigFileTemplate = readFile(file: templateFileName)
     echo("appConfigFileTemplate\n${appConfigFileTemplate}")
-    def appConfigFileContent = appConfigFileTemplate.replaceAll('@@ARTIFACT_ID@@', artifactId).replaceAll('@@IMAGE_TAG@@', imageTag).replaceAll('@@NAMESPACE@@', namespace)
+    def appConfigFileContent = appConfigFileTemplate.replaceAll('@@ARTIFACT_ID@@', artifactId)
+                                                    .replaceAll('@@IMAGE_TAG@@', imageTag)
+                                                    .replaceAll('@@NAMESPACE@@', namespace)
+                                                    .replaceAll('@@EXTERNAL_PORT@@', externalPort)
     echo("appConfigFileContent\n${appConfigFileContent}")
 
     writeFile(file: appConfigFileName, text: appConfigFileContent)
