@@ -10,7 +10,9 @@ def apply(namespace, templateFileName='kubernetes-app-config-template.yml') {
     def appConfigFileName = "${namespace}-config.yml"
 
     def appConfigFileTemplate = readFile(file: templateFileName)
+    echo("appConfigFileTemplate\n${appConfigFileTemplate}")
     def appConfigFileContent = appConfigFileTemplate.replaceAll('@@ARTIFACT_ID@@', artifactId).replaceAll('@@IMAGE_TAG@@', imageTag).replaceAll('@@NAMESPACE@@', namespace)
+    echo("appConfigFileContent\n${appConfigFileContent}")
 
     writeFile(file: appConfigFileName, text: appConfigFileContent)
 
