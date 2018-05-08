@@ -11,7 +11,7 @@ multibranchPipelineJob('pipelines/cicd-app-pipeline') {
 
     branchSources {
         github {
-            scanCredentialsId('crosslake-github')
+            scanCredentialsId('github')
             repoOwner('bpmericle')
             repository('cicd-demo-app')
         }
