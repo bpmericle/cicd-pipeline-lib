@@ -4,7 +4,7 @@ def call() {
     echo("Executing [Static Analysis] stage steps...")
 
     withSonarQubeEnv('sonarqube') {
-        sh("mvn -s dynamic-settings.xml -e sonar:sonar")
+        sh("mvn -DskipSourceCompile=true -DskipTestCompile=true -Dskip.surefire.tests=true -Dskip.failsafe.tests=true -Dmaven.javadoc.skip=true -s dynamic-settings.xml -e verify sonar:sonar")
     }
 
     echo("Completed [Static Analysis] stage steps.")
