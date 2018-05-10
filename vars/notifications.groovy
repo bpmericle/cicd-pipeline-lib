@@ -13,8 +13,12 @@ def notifyPipelineFailure() {
 }
 
 def notifyByEmail(subject, body) {
-    mail(subject: subject,
-         from: 'notifications@crosslaketech.com',
-         to: 'brianm@crosslaketech.com',
-         body: body)
+    try {
+        mail(subject: subject,
+             from: 'notifications@crosslaketech.com',
+             to: 'brianm@crosslaketech.com',
+             body: body)
+    } catch (Exception ex) {
+        echo("Caught while trying to email a notification: ${ex.message}")
+    }
 }
