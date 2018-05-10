@@ -25,12 +25,13 @@ def testContainer(namespace) {
   def artifactId = pomInfo.artifactId
 
   sleep(10)
-  def clusterIPCommand = "kubectl get services --namespace=${namespace} -o jsonpath='{.spec.clusterIP}' ${artifactId}"
-  def clusterIP = sh(script: clusterIPCommand, returnStdout: true).trim()
+  //def clusterIPCommand = "kubectl get services --namespace=${namespace} -o jsonpath='{.spec.clusterIP}' ${artifactId}"
+  //def clusterIP = sh(script: clusterIPCommand, returnStdout: true).trim()
   def portCommand = "kubectl get services --namespace=${namespace} -o jsonpath=\'{.spec.ports[?(@.name==\"http\")].port}\' ${artifactId}"
   def port = sh(script: portCommand, returnStdout: true).trim()
 
-  def healthCheckEndPoint = "http://${clusterIP}:${port}/actuator/health"
+  //def healthCheckEndPoint = "http://${clusterIP}:${port}/actuator/health"
+  def healthCheckEndPoint = "http://${artifactId}.${namespace}.svc.cluster.local:${port}/actuator/health"
   def healthCheckCommand = "curl -s -o /dev/null -w \"%{http_code}\" ${healthCheckEndPoint}"
   def statusCode = sh(script: healthCheckCommand, returnStdout: true).trim()
   if (statusCode != '200') {
