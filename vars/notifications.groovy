@@ -18,6 +18,12 @@ def notifyPipelineAborted() {
     notifyByEmail(subject, body)
 }
 
+def notifyOfInput() {
+    def subject = "Pipeline Notification [Pipeline ${JOB_NAME} Needs Input]"
+    def body = "The pipeline [<a href=\"${BUILD_URL}\">${BUILD_TAG}</a>] requires input. Please click <a href=\"${BUILD_URL}/input\">here</a> to provide input in order to continue."
+    notifyByEmail(subject, body)
+}
+
 def notifyByEmail(subject, body) {
     try {
         mail(subject: subject,
