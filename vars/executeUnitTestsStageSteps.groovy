@@ -3,7 +3,7 @@
 def call() {
     echo("Executing [Unit Tests] stage steps...")
 
-    if ('false' == ${SKIP}) {
+    if ('false' == SKIP) {
         sh("mvn -DskipSourceCompile=true -DskipTestCompile=true -Dskip.failsafe.tests=true -Dmaven.javadoc.skip=true -s dynamic-settings.xml -e verify")
     }
 

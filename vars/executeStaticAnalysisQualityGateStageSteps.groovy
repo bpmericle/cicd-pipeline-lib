@@ -3,7 +3,7 @@
 def call() {
     echo("Executing [Static Analysis Quality Gate] stage steps...")
 
-    if ('false' == ${SKIP}) {
+    if ('false' == SKIP) {
         timeout(time: 2, unit: 'MINUTES') {
             waitForQualityGate(abortPipeline: true)
         }
