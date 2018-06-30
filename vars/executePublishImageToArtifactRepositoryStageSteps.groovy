@@ -16,7 +16,7 @@ def call() {
     sh("sudo docker build -t ${dockerImageTag} -t ${dockerImageTagLatest} -t ${dockerRegistryTag} -t ${dockerRegistryTagLatest} --build-arg JAR_FILE=${jarFile} .")
 
     withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'LOGIN_USERNAME', passwordVariable: 'LOGIN_PASSWORD')]) {
-        sh("echo ${LOGIN_PASSWORD} | sudo docker login --username ${LOGIN_USERNAME} --password-stdin ${NEXUS_HOSTNAME}")
+        sh("echo ${LOGIN_PASSWORD} | sudo docker login --username ${LOGIN_USERNAME} --password-stdin ${dockerHostAndDockerPort}")
     }
 
     sh("sudo docker push ${dockerRegistryTag}")
